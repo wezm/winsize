@@ -1,12 +1,10 @@
 extern crate libc;
 
-#[cfg(any(target_os = "linux", target_os = "macos"))]
+#[cfg(any(target_os = "linux", target_os = "macos", target_os = "freebsd"))]
 mod imp {
     use std::mem;
 
     use libc;
-
-    use super::Shell;
 
     pub fn stderr_width() -> Option<usize> {
         unsafe {
@@ -23,7 +21,7 @@ mod imp {
     }
 }
 
-#[cfg(all(unix, not(any(target_os = "linux", target_os = "macos"))))]
+#[cfg(all(unix, not(any(target_os = "linux", target_os = "macos", target_os = "freebsd"))))]
 mod imp {
     pub fn stderr_width() -> Option<usize> {
         None
@@ -92,20 +90,20 @@ pub use imp::stderr_width;
 #[cfg(test)]
 mod tests {
     #[test]
-    #[cfg(any(target_os = "linux", target_os = "macos"))]
+    #[cfg(any(target_os = "linux", target_os = "macos", target_os = "freebsd"))]
     fn test_stderr_width() {
-        assert_eq!(super::stderr_width(), Some(42));
+        assert!(super::stderr_width().is_some());
     }
 
     #[test]
-    #[cfg(all(unix, not(any(target_os = "linux", target_os = "macos"))))]
+    #[cfg(all(unix, not(any(target_os = "linux", target_os = "macos", target_os = "freebsd"))))]
     fn test_stderr_width() {
-        assert_eq!(super::stderr_width(), None);
+        assert!(super::stderr_width().is_none());
     }
 
     #[test]
     #[cfg(windows)]
     fn test_stderr_width() {
-        assert_eq!(super::stderr_width(), Some(42));
+        assert!(super::stderr_width().is_some());
     }
 }

@@ -4,5 +4,6 @@ packages:
 sources:
   - https://github.com/wezm/winsize.git
 tasks:
-  test: |
-    cargo test
+  - test: |
+      cd winsize
+      cargo test
