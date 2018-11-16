@@ -1,0 +1,8 @@
+image: freebsd
+packages:
+  - rust
+sources:
+  - https://github.com/wezm/winsize.git
+tasks:
+  test: |
+    cargo test
