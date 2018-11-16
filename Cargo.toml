@@ -1,0 +1,28 @@
+[package]
+name = "winsize"
+version = "0.1.0"
+authors = ["Wesley Moore <wes@wezm.net>"]
+
+[dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies.winapi]
+version = "0.3"
+features = [
+  "basetsd",
+  "handleapi",
+  "jobapi",
+  "jobapi2",
+  "memoryapi",
+  "minwindef",
+  "ntdef",
+  "ntstatus",
+  "processenv",
+  "processthreadsapi",
+  "psapi",
+  "synchapi",
+  "winerror",
+  "winbase",
+  "wincon",
+  "winnt",
+]
