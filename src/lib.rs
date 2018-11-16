@@ -1,3 +1,5 @@
+extern crate libc;
+
 #[cfg(any(target_os = "linux", target_os = "macos"))]
 mod imp {
     use std::mem;
