@@ -4,7 +4,7 @@ task:
     image: wezm/steno-engine-ci:latest
   cargo_cache:
     folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
+    fingerprint_script: cat Cargo.toml
   test_script: cargo test
   before_cache_script: rm -rf $CARGO_HOME/registry/index
 
@@ -14,7 +14,7 @@ task:
     image: high-sierra-base
   cargo_cache:
     folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
+    fingerprint_script: cat Cargo.toml
   install_rust_script: 'curl https://sh.rustup.rs -sSf | sh -s -- -y'
   test_script: 'PATH="$HOME/.cargo/bin:$PATH" cargo test'
   before_cache_script: rm -rf $CARGO_HOME/registry/index
@@ -25,7 +25,7 @@ task:
     image: cirrusci/windowsservercore:2016
   cargo_cache:
     folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
+    fingerprint_script: cat Cargo.toml
   install_rust_script: 'curl https://sh.rustup.rs -sSf | sh -s -- -y'
   test_script: 'PATH="$HOME/.cargo/bin:$PATH" cargo test'
   before_cache_script: rm -rf $CARGO_HOME/registry/index
