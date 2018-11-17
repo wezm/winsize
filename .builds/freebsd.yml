@@ -6,4 +6,4 @@ sources:
 tasks:
   - test: |
       cd winsize
-      cargo test
+      cargo build --all
