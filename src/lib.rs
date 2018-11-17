@@ -40,8 +40,6 @@ mod imp {
     use self::winapi::um::wincon::*;
     use self::winapi::um::winnt::*;
 
-    pub(super) use super::default_err_erase_line as err_erase_line;
-
     pub fn stderr_width() -> Option<usize> {
         unsafe {
             let stdout = GetStdHandle(STD_ERROR_HANDLE);
