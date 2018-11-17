@@ -1,22 +1,12 @@
 task:
-  name: Test (Linux)
-  container:
-    image: wezm/steno-engine-ci:latest
-  cargo_cache:
-    folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
-  test_script: cargo test
-  before_cache_script: rm -rf $CARGO_HOME/registry/index
-
-task:
   name: Test (Mac OS)
   osx_instance:
     image: high-sierra-base
   cargo_cache:
     folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
+    fingerprint_script: cat Cargo.toml
   install_rust_script: 'curl https://sh.rustup.rs -sSf | sh -s -- -y'
-  test_script: 'PATH="$HOME/.cargo/bin:$PATH" cargo test'
+  test_script: 'PATH="$HOME/.cargo/bin:$PATH" cargo build --all'
   before_cache_script: rm -rf $CARGO_HOME/registry/index
 
 task:
@@ -25,7 +15,10 @@ task:
     image: cirrusci/windowsservercore:2016
   cargo_cache:
     folder: $CARGO_HOME/registry
-    fingerprint_script: cat Cargo.lock
-  install_rust_script: 'curl https://sh.rustup.rs -sSf | sh -s -- -y'
-  test_script: 'PATH="$HOME/.cargo/bin:$PATH" cargo test'
-  before_cache_script: rm -rf $CARGO_HOME/registry/index
+    fingerprint_script: type Cargo.toml
+  install_script: powershell -File .\ci\Windows.ps1
+  test_script:
+    - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+    - rustup default stable-x86_64-pc-windows-gnu
+    - cargo test
+  #before_cache_script: rm -rf $CARGO_HOME/registry/index
